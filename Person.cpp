@@ -18,7 +18,17 @@
 using namespace std;
 
 Person::Person(string inputString) : Person() {
-    //TODO: Implement non-default constructor
+    stringstream ss(inputString);
+    ss >> turn;
+    char one;
+    ss >> one;
+    ss >> currentFloor;
+    char two;
+    ss >> two;
+    ss >> targetFloor;
+    char three;
+    ss >> three;
+    ss >> angerLevel;
 }
 
 bool Person::tick(int currentTime) {
