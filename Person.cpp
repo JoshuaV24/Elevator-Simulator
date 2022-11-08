@@ -41,6 +41,9 @@ bool Person::tick(int currentTime) {
             return false;
         }
     }
+    else {
+        return false;
+    }
 }
 
 void Person::print(ostream &outs) {    
