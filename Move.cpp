@@ -19,7 +19,35 @@
 using namespace std;
 
 Move::Move(string commandString) : Move() {
-    //TODO: Implement non-default constructor
+    //if the command string is empty
+    //the user has selected a pass move
+    if (commandString == "") {
+        isPass = true;
+    }
+    //if the first letter of the command
+    //string is e, then it is a service move
+    //or a pickup move
+    else if (commandString[0] == 'e') {
+        elevatorId = commandString[1];
+        if (commandString[2] == 'p') {
+            isPickup = true;
+        }
+        else if (commandString[2] == 'f') {
+            targetFloor = commandString[3];
+        }
+    }
+    //if the command string's first letter is s
+    //then it is a save game
+    else if (commandString[0] == 's'
+        || commandString[0] == 'S') {
+        isSave = true;
+    }
+    //if the command string's first letter is q
+    //it is a quit game command
+    else if (commandString[0] == 'q' ||
+        commandString[0] == 'Q') {
+        isQuit = true;
+    }
 }
 
 bool Move::isValidMove(Elevator elevators[NUM_ELEVATORS]) const {
