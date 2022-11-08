@@ -16,10 +16,15 @@
 using namespace std;
 
 int Floor::tick(int currentTime) {
-    //TODO: Implement tick
-
-    //returning 0 to prevent compilation error
-    return 0;
+	int explodedCounter = 0;
+	for (int i = 0; i < numPeople; i++) {
+		if (people[i].Person::tick(currentTime) == 1) {
+			explodedCounter += 1;
+			int peopleToRemove[MAX_PEOPLE_PER_FLOOR] = { };
+			removePeople(&peopleToRemove[i], 1);
+		}
+	}
+    return explodedCounter;
 }
 
 void Floor::addPerson(Person newPerson, int request) {
