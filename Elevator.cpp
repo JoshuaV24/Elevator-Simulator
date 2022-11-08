@@ -18,7 +18,7 @@ using namespace std;
 void Elevator::tick(int currentTime) {
     //remainder is zero if TICKS_PER_ELEVATOR_MOVE
     //divides currentTime
-    if (currentTime % TICKS_PER_ELEVATOR_MOVE == 0) {
+    if (currentTime % TICKS_PER_ELEVATOR_MOVE == 0 && servicing == true) {
         //currentFloor is above targetFloor so decrement
         if (currentFloor > targetFloor) {
             currentFloor -= 1;
