@@ -68,7 +68,24 @@ bool Move::isValidMove(Elevator elevators[NUM_ELEVATORS]) const {
 }
 
 void Move::setPeopleToPickup(const string& pickupList, const int currentFloor, const Floor& pickupFloor) {
-    //TODO: Implement setPeopleToPickup
+    numPeopleToPickup = 0;
+    totalSatisfaction = 0;
+    // reads in each number from pickupList to peopleToPickup
+    for (int i = 0; i < pickupList.length(); i++) {
+        peopleToPickup[i] = pickupList[i];
+        numPeopleToPickup += 1;
+        // setting satisfaction level
+        Person anger[MAX_PEOPLE_PER_FLOOR] = { };
+        int angerLevel = anger[i].getAngerLevel();
+        totalSatisfaction += (MAX_ANGER - angerLevel);
+    }
+    // calculating targetFloor
+    for (int j = 0; j < pickupList.length(); j++) {
+        Move target[MAX_PEOPLE_PER_FLOOR] = { };
+        if (target[j].getTargetFloor() > targetFloor) {
+            targetFloor = target[j].getTargetFloor();
+        }
+    }
 }
 
 //////////////////////////////////////////////////////
