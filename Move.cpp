@@ -51,10 +51,20 @@ Move::Move(string commandString) : Move() {
 }
 
 bool Move::isValidMove(Elevator elevators[NUM_ELEVATORS]) const {
-    //TODO: Implement isValidMove
-    
-    //Returning false to prevent compilation error
-    return false;
+    Elevator currentFloor;
+    Elevator inService;
+    if (isPassMove || isQuitMove || isSaveMove) {
+        return true;
+    }
+    else if (isPickupMove && 0 <= elevatorId < NUM_ELEVATORS && !inService.isServicing()) {
+        return true;
+    }
+    else if (0 <= targetFloor < NUM_FLOORS && targetFloor != currentFloor.getCurrentFloor()) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 void Move::setPeopleToPickup(const string& pickupList, const int currentFloor, const Floor& pickupFloor) {
