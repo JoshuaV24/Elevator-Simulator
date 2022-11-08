@@ -23,6 +23,21 @@ Move::Move(string commandString) : Move() {
     //the user has selected a pass move
     if (commandString == "") {
         isPass = true;
+        return;
+    }
+    //if the command string's first letter is s
+    //then it is a save game
+    else if (commandString[0] == 's'
+        || commandString[0] == 'S') {
+        isSave = true;
+        return;
+    }
+    //if the command string's first letter is q
+    //it is a quit game command
+    else if (commandString[0] == 'q' ||
+        commandString[0] == 'Q') {
+        isQuit = true;
+        return;
     }
     //if the first letter of the command
     //string is e, then it is a service move
@@ -31,22 +46,12 @@ Move::Move(string commandString) : Move() {
         elevatorId = commandString[1];
         if (commandString[2] == 'p') {
             isPickup = true;
+            return;
         }
         else if (commandString[2] == 'f') {
             targetFloor = commandString[3];
+            return;
         }
-    }
-    //if the command string's first letter is s
-    //then it is a save game
-    else if (commandString[0] == 's'
-        || commandString[0] == 'S') {
-        isSave = true;
-    }
-    //if the command string's first letter is q
-    //it is a quit game command
-    else if (commandString[0] == 'q' ||
-        commandString[0] == 'Q') {
-        isQuit = true;
     }
 }
 
