@@ -19,8 +19,29 @@ void Building::spawnPerson(Person newPerson){
     floors[currentFloor].addPerson(newPerson, currentFloor);
 }
 
+
+// CURRENTLY NOT TESTED!! 
 void Building::update(Move move){
-    //TODO: Implement update
+    if (move.isPassMove()){
+        return;
+    }
+    
+    else{
+        // sends appropriate eleavator to service target floor
+        int desiredElevator = move.getElevatorId();
+        elevators[desiredElevator].serviceRequest(move.getTargetFloor());
+        
+        if (move.isPickupMove()){
+            //copy people
+            int copiedPeople[MAX_PEOPLE_PER_FLOOR];
+            move.copyListOfPeopleToPickup(copiedPeople);
+            
+            // removes the people on the desired elevator's current floor
+            floors[elevators[desiredElevator].getCurrentFloor()].removePeople(copiedPeople, move.getNumPeopleToPickup());
+            return;
+        }
+        return;
+    }
 }
 
 int Building::tick(Move move){
