@@ -49,7 +49,52 @@ void Game::playGame(bool isAIModeIn, ifstream& gameFile) {
 
 // Stub for isValidPickupList for Core
 // You *must* revise this function according to the RME and spec
+
+//not done!!
 bool Game::isValidPickupList(const string& pickupList, const int pickupFloorNum) const {
+        //pickuplist is valid if...
+    
+    //1. There are no duplicate indices present in pickupList
+    for (int i = 0; i < pickupList.length(); i++){
+        if (i == i + 1){
+            return false;
+        }
+    }
+    
+    //2. Each element of pickupList is a non-negative digit
+    for (int i = 0; i < pickupList.length(); i++){
+        if (i < 0){
+            return false;
+        }
+    }
+    
+    //3. The length of the pickupList is less than or equal to the capacity of an elevator
+    if (pickupList.length() > ELEVATOR_CAPACITY){
+        return false;
+    }
+    
+    //4. The maximum value pointed to by an index of pickupList must be strictly less than the number of people on the floor pointed to by pickupFloorNum
+    
+        //find max value in pickupList
+    int maxVal = 0;
+    for (int i = 0; i < pickupList.length(); i++){
+        if (pickupList[i] > maxVal){
+            maxVal = pickupList[i];
+        }
+    }
+        //find number of people on pickupFloorNum
+    int floorPeople;
+    floorPeople = building.getFloorByFloorNum(pickupFloorNum).getNumPeople();
+    
+    if (maxVal > floorPeople){
+        return false;
+    }
+    
+    //5. Each person represented by an index in pickupList must be going in the same direction relative to pickupFloorNum
+    
+    
+    
+    
     return true;
 }
 
