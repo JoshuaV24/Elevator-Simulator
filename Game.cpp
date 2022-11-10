@@ -52,7 +52,7 @@ void Game::playGame(bool isAIModeIn, ifstream& gameFile) {
 
 //not done!!
 bool Game::isValidPickupList(const string& pickupList, const int pickupFloorNum) const {
-        //pickuplist is valid if...
+    //pickuplist is valid if...
     
     //1. There are no duplicate indices present in pickupList
     for (int i = 0; i < pickupList.length(); i++){
@@ -91,11 +91,30 @@ bool Game::isValidPickupList(const string& pickupList, const int pickupFloorNum)
     }
     
     //5. Each person represented by an index in pickupList must be going in the same direction relative to pickupFloorNum
+    //int goingUpCount = 0;
+    //int goingDownCount = 0;
+   // for (int i = 0; i < pickupList.length(); i++){
+        //int index = pickupList.at(i);
+    //}
     
+    /*1. going up relative to pickupFloorNum
+     for i in pickuplist
+        desired floor > pickupfloor num
+     targetfloor
+        
+    2. going down relative to pickupFloorNum
+     for i in pickup list
+     desired floor < pickup floor
+     
+    3.*/
     
-    
-    
-    return true;
+    if (building.getFloorByFloorNum(pickupFloorNum).getHasUpRequest() &&
+        building.getFloorByFloorNum(pickupFloorNum).getHasDownRequest()){
+        return false;
+    }
+    else{
+        return true;
+    }
 }
 
 //////////////////////////////////////////////////////
