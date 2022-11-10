@@ -20,7 +20,6 @@ void Building::spawnPerson(Person newPerson){
 }
 
 
-// CURRENTLY NOT TESTED!! 
 void Building::update(Move move){
     if (move.isPassMove()){
         return;
