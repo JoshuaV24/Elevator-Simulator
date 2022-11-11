@@ -56,20 +56,25 @@ bool Game::isValidPickupList(const string& pickupList, const int pickupFloorNum)
     
     //1. There are no duplicate indices present in pickupList
     for (int i = 0; i < pickupList.length(); i++){
-        if (i == i + 1){
-            return false;
+        for (int j = i + 1; j < pickupList.length(); j++){
+            if (pickupList.at(i) == pickupList.at(j)){
+                //cout << "f1" << endl;
+                return false;
+            }
         }
     }
     
     //2. Each element of pickupList is a non-negative digit
     for (int i = 0; i < pickupList.length(); i++){
-        if (i < 0){
+        if (pickupList.at(i) == '-'){
+            //cout << "f2" << endl;
             return false;
         }
     }
     
     //3. The length of the pickupList is less than or equal to the capacity of an elevator
     if (pickupList.length() > ELEVATOR_CAPACITY){
+        //cout << "f3" << endl;
         return false;
     }
     
@@ -78,44 +83,39 @@ bool Game::isValidPickupList(const string& pickupList, const int pickupFloorNum)
         //find max value in pickupList
     int maxVal = 0;
     for (int i = 0; i < pickupList.length(); i++){
-        if (pickupList[i] > maxVal){
-            maxVal = pickupList[i];
+        if (pickupList[i] - '0' > maxVal){
+            maxVal = pickupList[i] - '0';
         }
     }
         //find number of people on pickupFloorNum
-    int floorPeople;
-    floorPeople = building.getFloorByFloorNum(pickupFloorNum).getNumPeople();
-    
-    if (maxVal > floorPeople){
+    int floorPeople = building.getFloorByFloorNum(pickupFloorNum).getNumPeople();
+        
+    if (maxVal > floorPeople - 1){
+
+        //cout << "f4" << endl;
         return false;
     }
     
     //5. Each person represented by an index in pickupList must be going in the same direction relative to pickupFloorNum
-    //int goingUpCount = 0;
-    //int goingDownCount = 0;
-   // for (int i = 0; i < pickupList.length(); i++){
-        //int index = pickupList.at(i);
-    //}
-    
-    /*1. going up relative to pickupFloorNum
-     for i in pickuplist
-        desired floor > pickupfloor num
-     targetfloor
-        
-    2. going down relative to pickupFloorNum
-     for i in pickup list
-     desired floor < pickup floor
-     
-    3.*/
-    
-    if (building.getFloorByFloorNum(pickupFloorNum).getHasUpRequest() &&
-        building.getFloorByFloorNum(pickupFloorNum).getHasDownRequest()){
+    int goingUpCount = 0;
+    int goingDownCount = 0;
+    for (int i = 0; i < pickupList.length(); i++){
+        int targetFloor = building.getFloorByFloorNum(pickupFloorNum).getPersonByIndex(pickupList.at(i)).getTargetFloor();
+        if (targetFloor > pickupFloorNum){
+            goingUpCount++;
+        }
+        else{
+            goingDownCount++;
+        }
+    }
+    if (goingUpCount > 0 &&
+        goingDownCount > 0){
         return false;
     }
-    else{
-        return true;
-    }
+    
+    return true;
 }
+
 
 //////////////////////////////////////////////////////
 ////// DO NOT MODIFY ANY CODE BENEATH THIS LINE //////
