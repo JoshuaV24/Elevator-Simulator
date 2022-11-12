@@ -12,6 +12,7 @@
 
 
 #include "Floor.h"
+#include <Algorithm>
 
 using namespace std;
 
@@ -41,7 +42,31 @@ void Floor::addPerson(Person newPerson, int request) {
 }
 
 void Floor::removePeople(int indicesToRemove[MAX_PEOPLE_PER_FLOOR], int numPeopleToRemove) {
-    //TODO: Implement removePeople
+    //start by sorting indicesToRemove
+	sort(indicesToRemove, indicgesToRemove + numPeopleToRemove);
+	//we want to carry out the removal operation
+	//for each element in the indicesToRemove array
+	for (int i = 0; i < numPeopleToRemove; i++) {
+		//this represents the index of the person we need to remove
+		int personToRemove = indicesToRemove[i];
+		for (int j = personToRemove; j < numPeople - 1; j++) {
+			//so we shift everything down by one
+			//but the last index is repeated
+			people[j] = people[j + 1];				
+		}
+		//to remove the trailing element, we adjust the size 
+		//of the array
+		numPeople -= 1;
+		//because array shifted back by one
+		//all of the indicesToRemove need to be
+		//decremented by one
+		for (int z = 0; z < numPeopleToRemove; z++) {
+			indicesToRemove[z] -= 1;
+		}
+
+	}
+	//resets requests
+	resetRequests();
 }
 
 void Floor::resetRequests() {
