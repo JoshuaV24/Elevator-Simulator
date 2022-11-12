@@ -58,25 +58,22 @@ Move::Move(string commandString) : Move() {
 bool Move::isValidMove(Elevator elevators[NUM_ELEVATORS]) const {
     Elevator currentFloor;
     Elevator isService;
-    int pass = isPass;
-    int quitMove = isQuit;
-    int saveMove = isSave;
-    int pickUp = isPickup;
-    if (pass == 1 || quitMove == 1 || saveMove == 1) {
-        return true;
+
+    if (isPass == 0 || isQuitMove == 0 || isSaveMove == 0) {
+        return false;
     }
-    else if (pass == 0 && pickUp == 0 && saveMove == 0 && quitMove == 0) {
+    else if (isPass == 0 && isPickup == 0 && isSaveMove == 0 && isQuitMove == 0) {
         if (0 <= elevatorId < NUM_ELEVATORS && isService.isServicing() == 0) {
             return true;
         }
         else if (0 <= targetFloor < NUM_FLOORS && targetFloor != currentFloor.getCurrentFloor()) {
             return true;
     }
-    else if (pickUp == 1 && 0 <= elevatorId < NUM_ELEVATORS) {
+    else if (isPickup == 1 && 0 <= elevatorId < NUM_ELEVATORS) {
         return true;
     }
     else {
-        return false;
+        return true;
     }
 }
 
