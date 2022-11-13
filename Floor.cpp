@@ -70,7 +70,19 @@ void Floor::removePeople(int indicesToRemove[MAX_PEOPLE_PER_FLOOR], int numPeopl
 }
 
 void Floor::resetRequests() {
-    //TODO: Implement resetRequests
+void Floor::resetRequests() {
+	for (int i = 0; i < numPeople; i++) {
+		int current = 0;
+		int target = 0;
+		current = people[i].getCurrentFloor();
+		target = people[i].getTargetFloor();
+		if (current > target) {
+			hasDownRequest = true;
+		}
+		else {
+			hasUpRequest = true;
+		}
+	}
 }
 
 //////////////////////////////////////////////////////
