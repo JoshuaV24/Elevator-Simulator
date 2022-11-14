@@ -16,9 +16,8 @@ using namespace std;
 
 void Building::spawnPerson(Person newPerson){
     int currentFloor = newPerson.getCurrentFloor();
-    floors[currentFloor].addPerson(newPerson, currentFloor);
+    floors[currentFloor].addPerson(newPerson, newPerson.getTargetFloor() - currentFloor);
 }
-
 
 void Building::update(Move move){
     if (move.isPassMove()){
@@ -47,17 +46,19 @@ int Building::tick(Move move){
     int peopleExploded = 0;
     time++;
     update(move);
+    
     // ticks elevators with new time
     for (int j = 0; j < NUM_ELEVATORS; j++) {
         elevators[j].tick(time);
     }
     // ticks floors with new time
     for (int i = 0; i < NUM_FLOORS; i++) {
-        floors[i].tick(time);
         peopleExploded += floors[i].tick(time);
     }
     return peopleExploded;
 }
+
+
 
 //////////////////////////////////////////////////////
 ////// DO NOT MODIFY ANY CODE BENEATH THIS LINE //////
