@@ -56,17 +56,15 @@ Move::Move(string commandString) : Move() {
 }
 
 bool Move::isValidMove(Elevator elevators[NUM_ELEVATORS]) const {
-    Elevator current;
-    Elevator service;
     if (isPass || isQuit || isSave) {
         return true;
     }
     else if (isPickup && 0 <= getElevatorId() && getElevatorId() < NUM_ELEVATORS 
-             && service.isServicing() == 0) {
+             && &Elevator::isServicing) {
         return true;
     }
     else if (0 <= targetFloor && targetFloor < NUM_FLOORS 
-             && getTargetFloor() != current.getCurrentFloor()) {
+             && getTargetFloor() != elevators->getCurrentFloor()) {
         return true;
     }
 }
