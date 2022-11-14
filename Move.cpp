@@ -61,10 +61,9 @@ bool Move::isValidMove(Elevator elevators[NUM_ELEVATORS]) const {
     if (isPass || isQuit || isSave) {
         return true;
     }
-    else if (0 <= getElevatorId() && getElevatorId() < NUM_ELEVATORS && service.isServicing() == 0) {
-        return true;
-    }
-    else if (0 <= targetFloor && targetFloor < NUM_FLOORS && getTargetFloor() != current.getCurrentFloor()) {
+    else if (0 <= getElevatorId() && getElevatorId() < NUM_ELEVATORS 
+        && service.isServicing() == 0 && 0 <= targetFloor && targetFloor < NUM_FLOORS 
+        && getTargetFloor() != current.getCurrentFloor()) {
         return true;
     }
 }
