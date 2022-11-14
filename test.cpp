@@ -26,6 +26,7 @@
 #include "SatisfactionIndex.h"
 #include "Utility.h"
 
+void person_tests();
 void elevator_tests();
 
 using namespace std;
@@ -33,12 +34,50 @@ using namespace std;
 // declare your test functions here
 
 void start_tests() {
+    person_tests();
     elevator_tests();
+ 
     
     return;
 }
 
-// write test functions here
+void person_tests() {
+    //initialize a person with targetFloor 5, anger 5
+    Person p("0f0t5a5");
+    cout << p.getTargetFloor() << " " << p.getAngerLevel() << " Expected 5 5" << endl;
+    
+    //simulate time being a multiple of TICKS_PER_ANGER_INCREASE
+    bool exploded = p.tick(TICKS_PER_ANGER_INCREASE);
+    cout << exploded << " Expected 0" << endl;
+    cout << p.getTargetFloor() << " " << p.getAngerLevel() << " Expected 5 6" << endl;
+    
+    //simulate time not being a multiple
+    p.tick(TICKS_PER_ANGER_INCREASE - 1);
+    
+    //no change
+    cout << p.getTargetFloor() << " " << p.getAngerLevel() << " Expected 5 6" << endl;
+    p.tick(TICKS_PER_ANGER_INCREASE); //7 after
+    p.tick(TICKS_PER_ANGER_INCREASE); //8 after
+    p.tick(TICKS_PER_ANGER_INCREASE); //9 after
+    exploded = p.tick(TICKS_PER_ANGER_INCREASE);
+    cout << exploded << " Expected 1" << endl;
+    
+    Person vin("0f2t5a3");
+    cout << "Expected f2t5a3, actual " << vin << endl;
+    cout << vin.getTargetFloor() << " " << vin.getAngerLevel() << " Expected 5 3" << endl;
+    
+    exploded = vin.tick(TICKS_PER_ANGER_INCREASE);
+    
+    cout << "Expected 4, actual " << vin.getAngerLevel();
+    vin.tick(TICKS_PER_ANGER_INCREASE);
+    vin.tick(TICKS_PER_ANGER_INCREASE);
+    vin.tick(TICKS_PER_ANGER_INCREASE);
+    vin.tick(TICKS_PER_ANGER_INCREASE);
+    cout << "Expected 0, actual " << exploded << endl;
+    vin.tick(TICKS_PER_ANGER_INCREASE);
+    vin.tick(TICKS_PER_ANGER_INCREASE);
+    cout << "Expected 10, actual " << vin.getAngerLevel() << endl;
+}
 void elevator_tests() {
 
     //testing tick
