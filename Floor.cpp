@@ -21,8 +21,7 @@ int Floor::tick(int currentTime) {
 	for (int i = 0; i < numPeople; i++) {
 		if (people[i].Person::tick(currentTime) == 1) {
 			explodedCounter += 1;
-			int peopleToRemove[MAX_PEOPLE_PER_FLOOR] = { i };
-			removePeople(&peopleToRemove[i], 1);
+			removePeople(&i, 1);
 		}
 	}
     return explodedCounter;
