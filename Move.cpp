@@ -68,6 +68,7 @@ bool Move::isValidMove(Elevator elevators[NUM_ELEVATORS]) const {
         return true;
     }
 }
+
 void Move::setPeopleToPickup(const string& pickupList, const int currentFloor, const Floor& pickupFloor) {
     numPeopleToPickup = 0;
     totalSatisfaction = 0;
@@ -93,7 +94,7 @@ void Move::setPeopleToPickup(const string& pickupList, const int currentFloor, c
             setTargetFloor(target[j].getTargetFloor());
         }
     }
-}
+} 
 
 //////////////////////////////////////////////////////
 ////// DO NOT MODIFY ANY CODE BENEATH THIS LINE //////
