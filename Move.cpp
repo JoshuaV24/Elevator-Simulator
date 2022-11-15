@@ -89,7 +89,7 @@ void Move::setPeopleToPickup(const string& pickupList, const int currentFloor, c
     for (int j = 0; j < (pickupList.length() -  1); j++) {
         Move target[MAX_PEOPLE_PER_FLOOR] = { };
         int tempTarget = 0;
-        if (abs(target[j].getTargetFloor() - targetFloor) > abs(target[j + 1].getTargetFloor() - targetFloor)) {
+        if (abs(target[j].getTargetFloor() - currentFloor) > abs(target[j + 1].getTargetFloor() - currentFloor)) {
             setTargetFloor(target[j].getTargetFloor());
         }
     }
