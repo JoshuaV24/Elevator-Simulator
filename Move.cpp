@@ -68,7 +68,6 @@ bool Move::isValidMove(Elevator elevators[NUM_ELEVATORS]) const {
         return true;
     }
 }
-
 void Move::setPeopleToPickup(const string& pickupList, const int currentFloor, const Floor& pickupFloor) {
     numPeopleToPickup = 0;
     totalSatisfaction = 0;
@@ -83,18 +82,19 @@ void Move::setPeopleToPickup(const string& pickupList, const int currentFloor, c
         int angerLevel = anger[i].getAngerLevel();
         totalSatisfaction += (MAX_ANGER - angerLevel);
     }
-   
     //copying over pickupList to peopleToPickup
     copyListOfPeopleToPickup(copy);
     
     // calculating targetFloor
-    for (int j = 0; j < pickupList.length(); j++) {
+    for (int j = 0; j < (pickupList.length() -  1); j++) {
         Move target[MAX_PEOPLE_PER_FLOOR] = { };
-        if (target[j].getTargetFloor() > targetFloor) {
+        int tempTarget = 0;
+        if (abs(target[j].getTargetFloor() - targetFloor) > abs(target[j + 1].getTargetFloor() - targetFloor)) {
             setTargetFloor(target[j].getTargetFloor());
         }
     }
-} 
+}
+
 //////////////////////////////////////////////////////
 ////// DO NOT MODIFY ANY CODE BENEATH THIS LINE //////
 //////////////////////////////////////////////////////
