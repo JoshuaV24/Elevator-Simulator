@@ -77,7 +77,7 @@ void Floor::resetRequests() {
 		if (current > target) {
 			setHasDownRequest(true);
 		}
-		else {
+		else if (current < target) {
 			setHasUpRequest(true);
 		}
 	}
