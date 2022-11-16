@@ -79,12 +79,12 @@ bool Move::isValidMove(Elevator elevators[NUM_ELEVATORS]) const {
              && &Elevator::isServicing) {
         return true;
     }
-    else if (0 <= targetFloor && targetFloor < NUM_FLOORS 
-             && getTargetFloor() != elevators->getCurrentFloor()) {
+    else if (0 <= targetFloor && targetFloor < NUM_FLOORS
+             && &Elevator::getTargetFloor != &Elevator::getCurrentFloor) {
         return true;
     }
     else {
-	return false;
+        return false;
     }
 }
 
