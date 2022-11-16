@@ -12,7 +12,7 @@
 
 
 #include "Floor.h"
-#include <Algorithm>
+#include <algorithm>
 
 using namespace std;
 
