@@ -69,6 +69,8 @@ void Floor::removePeople(int indicesToRemove[MAX_PEOPLE_PER_FLOOR], int numPeopl
 }
 
 void Floor::resetRequests() {
+	setHasDownRequest(false);
+	setHasUpRequest(false);
 	for (int i = 0; i < numPeople; i++) {
 		int current = 0;
 		int target = 0;
