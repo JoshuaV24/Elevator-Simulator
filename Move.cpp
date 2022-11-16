@@ -100,15 +100,12 @@ void Move::setPeopleToPickup(const string& pickupList, const int currentFloor, c
         numPeopleToPickup += 1;
         // setting satisfaction level
         Person person = pickupFloor.getPersonByIndex(i);
+        Person nextPerson = pickupFloor.getPersonByIndex(i + 1);
         int angerLevel = person.getAngerLevel();
         totalSatisfaction += (MAX_ANGER - angerLevel);
-    }
-    
-    // calculating targetFloor
-    for (int j = 0; j < (pickupList.length() -  1); j++) {
-        Move target[MAX_PEOPLE_PER_FLOOR] = { };
-        if (abs(target[j].getTargetFloor() - currentFloor) > abs(target[j + 1].getTargetFloor() - currentFloor)) {
-            setTargetFloor(target[j].getTargetFloor());
+        // calculating targetFloor
+        if (abs(person.getTargetFloor() - currentFloor) > abs(nextPerson.getTargetFloor() - currentFloor)) {
+            setTargetFloor(person.getTargetFloor());
         }
     }
 } 
