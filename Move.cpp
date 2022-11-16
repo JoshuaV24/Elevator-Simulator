@@ -67,6 +67,9 @@ bool Move::isValidMove(Elevator elevators[NUM_ELEVATORS]) const {
              && getTargetFloor() != elevators->getCurrentFloor()) {
         return true;
     }
+    else {
+	return false;
+    }
 }
 
 void Move::setPeopleToPickup(const string& pickupList, const int currentFloor, const Floor& pickupFloor) {
