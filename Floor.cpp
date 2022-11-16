@@ -42,7 +42,7 @@ void Floor::addPerson(Person newPerson, int request) {
 
 void Floor::removePeople(int indicesToRemove[MAX_PEOPLE_PER_FLOOR], int numPeopleToRemove) {
     //start by sorting indicesToRemove
-	sort(indicesToRemove, indicgesToRemove + numPeopleToRemove);
+	sort(indicesToRemove, indicesToRemove + numPeopleToRemove);
 	//we want to carry out the removal operation
 	//for each element in the indicesToRemove array
 	for (int i = 0; i < numPeopleToRemove; i++) {
