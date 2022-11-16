@@ -22,7 +22,10 @@ Move::Move(string commandString) : Move() {
     //if the command string is empty
     //the user has selected a pass move
     if (commandString == "") {
-        isPass = true;
+        isPass = true; //try taking out the rest
+        isPickup = false;
+        isSave = false;
+        isQuit = false;
         return;
     }
     //if the command string's first letter is s
@@ -30,6 +33,9 @@ Move::Move(string commandString) : Move() {
     else if (commandString[0] == 's'
         || commandString[0] == 'S') {
         isSave = true;
+        isPass = false;
+        isPickup = false;
+        isQuit = false;
         return;
     }
     //if the command string's first letter is q
@@ -37,19 +43,29 @@ Move::Move(string commandString) : Move() {
     else if (commandString[0] == 'q' ||
         commandString[0] == 'Q') {
         isQuit = true;
+        isPass = false;
+        isPickup = false;
+        isSave = false;
         return;
     }
     //if the first letter of the command
     //string is e, then it is a service move
     //or a pickup move
     else if (commandString[0] == 'e') {
-        elevatorId = commandString[1];
+        elevatorId = static_cast<int>(commandString[1] -  '0');
         if (commandString[2] == 'p') {
             isPickup = true;
+            isPass = false;
+            isQuit = false;
+            isSave = false;
             return;
         }
         else if (commandString[2] == 'f') {
-            targetFloor = commandString[3];
+            targetFloor = static_cast<int>(commandString[3] - '0');
+            isPickup = false;
+            isPass = false;
+            isQuit = false;
+            isSave = false;
             return;
         }
     }
