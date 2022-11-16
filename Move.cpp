@@ -76,11 +76,11 @@ bool Move::isValidMove(Elevator elevators[NUM_ELEVATORS]) const {
         return true;
     }
     else if (isPickup && 0 <= getElevatorId() && getElevatorId() < NUM_ELEVATORS 
-             && &Elevator::isServicing) {
+             && !elevators[elevatorId].isServicing()) {
         return true;
     }
-    else if (0 <= targetFloor && targetFloor < NUM_FLOORS
-             && &Elevator::getTargetFloor != &Elevator::getCurrentFloor) {
+    else if (0 <= targetFloor && targetFloor < NUM_FLOORS && 0 <= getElevatorId() && getElevatorId() < NUM_ELEVATORS
+             && elevators[elevatorId].getTargetFloor() != elevators[elevatorId].getCurrentFloor()) {
         return true;
     }
     else {
