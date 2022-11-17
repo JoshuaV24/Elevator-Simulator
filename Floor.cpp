@@ -41,17 +41,21 @@ void Floor::addPerson(Person newPerson, int request) {
 }
 
 void Floor::removePeople(int indicesToRemove[MAX_PEOPLE_PER_FLOOR], int numPeopleToRemove) {
-    //start by sorting indicesToRemove
-	sort(indicesToRemove, indicesToRemove + numPeopleToRemove);
+    	//copy indicesToRemove into new array
+	int newArray[MAX_PEOPLE_PER_FLOOR];
+	int size = numPeopleToRemove;
+	copy(indicesToRemove, indicesToRemove + size, newArray);
+	//start by sorting indicesToRemove
+	sort(newArray, newArray + numPeopleToRemove);
 	//we want to carry out the removal operation
 	//for each element in the indicesToRemove array
 	for (int i = 0; i < numPeopleToRemove; i++) {
 		//this represents the index of the person we need to remove
-		int personToRemove = indicesToRemove[i];
+		int personToRemove = newArray[i];
 		for (int j = personToRemove; j < numPeople - 1; j++) {
 			//so we shift everything down by one
 			//but the last index is repeated
-			people[j] = people[j + 1];				
+			people[j] = people[j + 1];
 		}
 		//to remove the trailing element, we adjust the size 
 		//of the array
@@ -60,7 +64,7 @@ void Floor::removePeople(int indicesToRemove[MAX_PEOPLE_PER_FLOOR], int numPeopl
 		//all of the indicesToRemove need to be
 		//decremented by one
 		for (int z = 0; z < numPeopleToRemove; z++) {
-			indicesToRemove[z] -= 1;
+			newArray[z] -= 1;
 		}
 
 	}
