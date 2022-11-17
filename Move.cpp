@@ -93,10 +93,9 @@ void Move::setPeopleToPickup(const string& pickupList, const int currentFloor, c
     totalSatisfaction = 0;
 
     // reads in each number from pickupList to peopleToPickup
-    for (int i = 0; i < sizeof(pickupList); i++) {
-        char tempChar = pickupList[i];
-        int tempInt = tempChar;
-        peopleToPickup[i] = tempInt;
+    for (int i = 0; i < pickupList.length(); i++) {
+        int temp = pickupList[i];
+        peopleToPickup[i] = temp;
         numPeopleToPickup += 1;
         // setting satisfaction level
         Person person = pickupFloor.getPersonByIndex(i);
