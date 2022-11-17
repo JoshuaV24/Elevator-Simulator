@@ -75,12 +75,12 @@ bool Move::isValidMove(Elevator elevators[NUM_ELEVATORS]) const {
     if (isPass || isQuit || isSave) {
         return true;
     }
-    else if (isPickup && 0 <= getElevatorId() && getElevatorId() < NUM_ELEVATORS 
+    else if (isPickup && 0 <= getElevatorId() && elevatorId < NUM_ELEVATORS 
              && !elevators[elevatorId].isServicing()) {
         return true;
     }
-    else if (0 <= targetFloor && targetFloor < NUM_FLOORS && 0 <= getElevatorId() && getElevatorId() < NUM_ELEVATORS
-             && elevators[elevatorId].getTargetFloor() != elevators[elevatorId].getCurrentFloor()) {
+    else if (0 <= targetFloor && targetFloor < NUM_FLOORS && 0 <= elevatorId && elevatorId < NUM_ELEVATORS 
+	     && !elevators[elevatorId].isServicing() && targetFloor != elevators[elevatorId].getCurrentFloor()) {
         return true;
     }
     else {
@@ -93,8 +93,9 @@ void Move::setPeopleToPickup(const string& pickupList, const int currentFloor, c
     totalSatisfaction = 0;
 
     // reads in each number from pickupList to peopleToPickup
+    targetFloor = currentFloor;
     for (int i = 0; i < pickupList.length(); i++) {
-        int temp = pickupList[i];
+        int temp = pickupList.at(i) - '0';
         peopleToPickup[i] = temp;
         numPeopleToPickup += 1;
         // setting satisfaction level
