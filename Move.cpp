@@ -101,8 +101,7 @@ void Move::setPeopleToPickup(const string& pickupList, const int currentFloor, c
         // setting satisfaction level
         Person person = pickupFloor.getPersonByIndex(i);
         Person nextPerson = pickupFloor.getPersonByIndex(i + 1);
-        int angerLevel = person.getAngerLevel();
-        totalSatisfaction += (MAX_ANGER - angerLevel);
+        totalSatisfaction += (MAX_ANGER - person.getAngerLevel());
         // calculating targetFloor
         if (abs(person.getTargetFloor() - currentFloor) > abs(nextPerson.getTargetFloor() - currentFloor)) {
             setTargetFloor(person.getTargetFloor());
