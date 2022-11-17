@@ -18,13 +18,15 @@ using namespace std;
 
 int Floor::tick(int currentTime) {
 	int explodedCounter = 0;
+	int temp[MAX_PEOPLE_PER_FLOOR] = { };
 	for (int i = 0; i < numPeople; i++) {
-		if (people[i].Person::tick(currentTime) == 1) {
+		if (people[i].tick(currentTime)) {
+			temp[explodedCounter] = i;
 			explodedCounter += 1;
-			removePeople(&i, 1);
 		}
 	}
-    return explodedCounter;
+	removePeople(temp, 1);
+	return explodedCounter;
 }
 
 void Floor::addPerson(Person newPerson, int request) {
