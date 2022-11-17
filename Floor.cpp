@@ -20,15 +20,14 @@ int Floor::tick(int currentTime) {
 	int explodedCounter = 0;
 	int temp[MAX_PEOPLE_PER_FLOOR] = { };
 	for (int i = 0; i < numPeople; i++) {
-		if (people[i].tick(currentTime)) {
+		if (getPersonByIndex(i).tick(currentTime)) {
 			temp[explodedCounter] = i;
 			explodedCounter += 1;
 		}
 	}
-	removePeople(temp, 1);
+	removePeople(temp, explodedCounter);
 	return explodedCounter;
 }
-
 void Floor::addPerson(Person newPerson, int request) {
     if (numPeople < MAX_PEOPLE_PER_FLOOR){
         people[numPeople] = newPerson;
