@@ -15,11 +15,17 @@
 #include "Game.h"
 #include "AI.h"
 #include "Utility.h"
+#include <stdio.h>
+#include <stdlib.h>
 using namespace std;
 
 // Stub for playGame for Core, which plays random games
 // You *must* revise this function according to the RME and spec
 void Game::playGame(bool isAIModeIn, ifstream& gameFile) {
+    if (gameFile.fail()) {
+        exit(EXIT_FAILURE);
+    }
+    
     std::mt19937 gen(1);
     std::uniform_int_distribution<> floorDist(0, 9);
     std::uniform_int_distribution<> angerDist(0, 3);
@@ -46,6 +52,7 @@ void Game::playGame(bool isAIModeIn, ifstream& gameFile) {
         update(nextMove);
     }
 }
+
 
 // Stub for isValidPickupList for Core
 // You *must* revise this function according to the RME and spec
