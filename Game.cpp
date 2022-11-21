@@ -73,7 +73,7 @@ bool Game::isValidPickupList(const string& pickupList, const int pickupFloorNum)
     
     //2. Each element of pickupList is a non-negative digit
     for (int i = 0; i < pickupList.length(); i++){
-        if (pickupList.at(i) == '-'){
+        if (pickupList[i] - '0' < 0 ){
             //cout << "f2" << endl;
             return false;
         }
@@ -107,7 +107,7 @@ bool Game::isValidPickupList(const string& pickupList, const int pickupFloorNum)
     int goingUpCount = 0;
     int goingDownCount = 0;
     for (int i = 0; i < pickupList.length(); i++){
-        int targetFloor = building.getFloorByFloorNum(pickupFloorNum).getPersonByIndex(pickupList.at(i)).getTargetFloor();
+        int targetFloor = building.getFloorByFloorNum(pickupFloorNum).getPersonByIndex(pickupList.at(i) - '0').getTargetFloor();
         if (targetFloor > pickupFloorNum){
             goingUpCount++;
         }
