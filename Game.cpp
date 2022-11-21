@@ -25,33 +25,37 @@ void Game::playGame(bool isAIModeIn, ifstream& gameFile) {
     if (gameFile.fail()) {
         exit(EXIT_FAILURE);
     }
-    
-    std::mt19937 gen(1);
-    std::uniform_int_distribution<> floorDist(0, 9);
-    std::uniform_int_distribution<> angerDist(0, 3);
 
     isAIMode = isAIModeIn;
     printGameStartPrompt();
     initGame(gameFile);
 
-    while (true) {
-        int src = floorDist(gen);
-        int dst = floorDist(gen);
-        if (src != dst) {
-            std::stringstream ss;
-            ss << "0f" << src << "t" << dst << "a" << angerDist(gen);
-            Person p(ss.str());
-            building.spawnPerson(p);
+    string type;
+    while (gameFile >> type) {
+        Person player(type); // spawning person where it needs to be spawned
+        player.getTurn();
+        while(building.getTime() < player.getTurn()) {
+            // user plays game
+            building.prettyPrintBuilding(cout);
+            satisfactionIndex.printSatisfaction(cout, false);
+            checkForGameEnd();
+            Move m = getMove();
+            update(m);
         }
-
+        building.spawnPerson(player);
+    }
+    
+        
+    while (true) {
         building.prettyPrintBuilding(cout);
         satisfactionIndex.printSatisfaction(cout, false);
         checkForGameEnd();
+        Move m = getMove();
+        update(m);
 
-        Move nextMove = getMove();
-        update(nextMove);
+        }
     }
-}
+
 
 
 // Stub for isValidPickupList for Core
