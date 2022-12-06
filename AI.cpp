@@ -38,7 +38,7 @@ if (counter >= 2) {
             counterTwo++;
         }
     }
-//now calculating distances to determine which floor to send elevators to
+    //now calculating distances to determine which floor to send elevators to
     string serviceMove = "ezfz";
     int floorOptions[NUM_FLOORS] = { };
     for (int k = 0; k < counterTwo; k++) {
