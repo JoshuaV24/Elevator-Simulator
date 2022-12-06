@@ -38,7 +38,15 @@
 // You do not need to make any changes to this file for the Core
 
 string getAIMoveString(const BuildingState& buildingState) {
-    return "";
+        string passMove(Move& move);
+    int notServicing = 0;
+    for (int i = 0; i < 3; i++) {
+    if (!buildingState.elevators[i].isServicing) {
+        notServicing++;
+    }
+    if (notServicing == 3) {
+        return "";
+    }
 }
 
 string getAIPickupList(const Move& move, const BuildingState& buildingState, 
