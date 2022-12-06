@@ -17,48 +17,7 @@
 // You do not need to make any changes to this file for the Core
 
 string getAIMoveString(const BuildingState& buildingState) {
-//first checking the servicing state of an elevator, storing elevators that aren't servicing in a temp array and storing their current floor
-int counter = 0;
-int tempElevatorsServicing[NUM_ELEVATORS] = { };
-int tempElevatorFloors[NUM_ELEVATORS] = { };
-for (int i = 0; i < NUM_ELEVATORS; i++) {
-    if (!buildingState.elevators[i].isServicing) {
-        tempElevatorsServicing[counter] = i;
-        tempElevatorFloors[counter] = buildingState.elevators[i].currentFloor;
-        counter++;
-    }
-}
-if (counter >= 2) {
-    //then looking for floors with up/down requests
-    int tempFloors[NUM_FLOORS] = { };
-    int counterTwo = 0;
-    for (int j = 0; j < NUM_FLOORS; j++) {
-        if (buildingState.floors[j].hasUpRequest || buildingState.floors[j].hasDownRequest) {
-            tempFloors[counterTwo] = j;
-            counterTwo++;
-        }
-    }
-    //now calculating distances to determine which floor to send elevators to
-    string serviceMove = "ezfz";
-    int floorOptions[NUM_FLOORS] = { };
-    for (int k = 0; k < counterTwo; k++) {
-        for (int f = 0; f < (counter - 1); f++) {
-            if (abs(tempElevatorFloors[f] - tempFloors[k]) <= 
-                (abs(tempElevatorFloors[f + 1] - tempFloors[k]))) {
-                floorOptions[k] = (abs(tempElevatorFloors[f] - tempFloors[k]));
-            }
-            for (int h = 0; h < (counterTwo - 1); h++) {
-                if (floorOptions[h] <= floorOptions[h + 1] && tempFloors[k] != 
-                    buildingState.elevators[f].currentFloor) {
-                    serviceMove[1] = '0' + tempElevatorsServicing[f];
-                    serviceMove[3] = '0' + tempFloors[k];
-                    return serviceMove;
-                }
-            }
-        }
-    }
-}
-return "";
+    return "";
 }
 
 string getAIPickupList(const Move& move, const BuildingState& buildingState, 
@@ -92,4 +51,47 @@ string goUpOrDown(Floor& floor) {
     else {
         return "down";
     }
+}
+
+string decideBetweenTwo(const BuildingState& buildingState) {
+    //first checking the servicing state of an elevator, storing elevators that aren't servicing in a temp array and storing their current floor
+    int counter = 0;
+    int tempElevatorsServicing[NUM_ELEVATORS] = { };
+    int tempElevatorFloors[NUM_ELEVATORS] = { };
+    for (int i = 0; i < NUM_ELEVATORS; i++) {
+        if (!buildingState.elevators[i].isServicing) {
+            tempElevatorsServicing[counter] = i;
+            tempElevatorFloors[counter] = buildingState.elevators[i].currentFloor;
+            counter++;
+        }
+    }
+    if (counter >= 2) {
+        //then looking for floors with up/down requests
+        int tempFloors[NUM_FLOORS] = { };
+        int counterTwo = 0;
+        for (int j = 0; j < NUM_FLOORS; j++) {
+            if (buildingState.floors[j].hasUpRequest || buildingState.floors[j].hasDownRequest) {
+                tempFloors[counterTwo] = j;
+                counterTwo++;
+            }
+        }
+        //now calculating distances to determine which floor to send elevators to
+        string serviceMove = "ezfz";
+        int floorOptions[NUM_FLOORS] = { };
+        for (int k = 0; k < counterTwo; k++) {
+            for (int f = 0; f < (counter - 1); f++) {
+                if (abs(tempElevatorFloors[f] - tempFloors[k]) <= (abs(tempElevatorFloors[f + 1] - tempFloors[k]))) {
+                    floorOptions[k] = (abs(tempElevatorFloors[f] - tempFloors[k]));
+                }
+                for (int h = 0; h < (counterTwo - 1); h++) {
+                    if (floorOptions[h] <= floorOptions[h + 1] && tempFloors[k] != buildingState.elevators[f].currentFloor) {
+                        serviceMove[1] = '0' + tempElevatorsServicing[f];
+                        serviceMove[3] = '0' + tempFloors[k];
+                        return serviceMove;
+                    }
+                }
+            }
+        }
+    }
+    return "";
 }
