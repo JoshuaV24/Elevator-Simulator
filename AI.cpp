@@ -17,6 +17,8 @@
 // You do not need to make any changes to this file for the Core
 
 string getAIMoveString(const BuildingState& buildingState) {
+    goUpOrDown(floor);
+    decideBetweenTwo(buildingState);
     return "";
 }
 
