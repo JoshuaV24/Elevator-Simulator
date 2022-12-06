@@ -13,12 +13,31 @@
 #include "AI.h"
 #include <cassert>
 
+
+
+
+//Questions:
+//How do all the functions fit together
+//How do we access classes that aren't listed as parameters or are we only supposed to use what is listed as parameters for the two functions given?
+//How can we use BuildingState to determine a move string?
+//Can we get an overview of how everything should fit together?
+//How can we access the elevators and floors in building state?
+
+
+
+
+
+
+
+
+
+
+
+
 // This file is used only in the Reach, not the Core.
 // You do not need to make any changes to this file for the Core
 
 string getAIMoveString(const BuildingState& buildingState) {
-    goUpOrDown(floor);
-    decideBetweenTwo(buildingState);
     return "";
 }
 
