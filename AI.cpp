@@ -31,6 +31,36 @@
 
 
 
+// this function determines the floor with the highest anger level, and sends an empty elevator to that floor 
+string sendLowestSatisfaction(BuildingState building){
+    int highestAnger = 0;
+    int totalFloorSatisfaction = 0;
+    string moveString =  "";
+    
+    //1. iterate over the 10 floors
+    for (int currFloor = 0; currFloor < NUM_FLOORS; currFloor++){
+        //acsesses floor object of current floor
+        _Floor floor = building.floors[currFloor];
+        //2a. iterate over people on the floor and sum their anger level
+        for (int j = 0; j < floor.numPeople; ++j) {
+            _Person littleMan = floor.people[j];
+            totalFloorSatisfaction += littleMan.angerLevel;
+        }
+        //find floor with highest anger level
+        if (totalFloorSatisfaction > highestAnger){
+            highestAnger = totalFloorSatisfaction;
+        }
+        for (int i = 0; i < NUM_ELEVATORS; ++i) {
+            _Elevator elevator = building.elevators[i];
+            if (!elevator.isServicing) {
+                string moveString = "e" + to_string(i) + "f" + to_string(currFloor);
+            }
+        }
+    }
+    return moveString;
+}
+
+
 
 
 
