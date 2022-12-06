@@ -32,6 +32,7 @@
 
 
 // this function determines the floor with the highest anger level, and sends an empty elevator to that floor 
+// How do you test this-- I dont think there is any way for a human person to determine the floor with the highest anger
 string sendLowestSatisfaction(BuildingState building){
     int highestAnger = 0;
     int totalFloorSatisfaction = 0;
