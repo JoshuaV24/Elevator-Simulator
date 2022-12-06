@@ -55,6 +55,9 @@ string sendLowestSatisfaction(BuildingState building){
             if (!elevator.isServicing) {
                 string moveString = "e" + to_string(i) + "f" + to_string(currFloor);
             }
+            else{
+                string moveString = "e" + to_string(i) + "p";
+            }
         }
     }
     return moveString;
