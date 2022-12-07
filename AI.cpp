@@ -33,37 +33,139 @@
 
 
 // this function determines the floor with the highest anger level, and sends an empty elevator to that floor 
-// How do you test this-- I dont think there is any way for a human person to determine the floor with the highest anger
-string sendLowestSatisfaction(BuildingState building){
-    int highestAnger = 0;
-    int totalFloorSatisfaction = 0;
-    string moveString =  "";
+/*
+string getAIMoveString(const BuildingState& buildingState) {
+
+    int floor0Satisfaction = 0;
+    int floor1Satisfaction = 0;
+    int floor2Satisfaction = 0;
+    int floor3Satisfaction = 0;
+    int floor4Satisfaction = 0;
+    int floor5Satisfaction = 0;
+    int floor6Satisfaction = 0;
+    int floor7Satisfaction = 0;
+    int floor8Satisfaction = 0;
+    int floor9Satisfaction = 0;
+    string myMove = "";
     
-    //1. iterate over the 10 floors
-    for (int currFloor = 0; currFloor < NUM_FLOORS; currFloor++){
-        //acsesses floor object of current floor
-        _Floor floor = building.floors[currFloor];
-        //2a. iterate over people on the floor and sum their anger level
-        for (int j = 0; j < floor.numPeople; ++j) {
-            _Person littleMan = floor.people[j];
-            totalFloorSatisfaction += littleMan.angerLevel;
+    _Elevator elevatorZero = buildingState.elevators[0];
+    _Elevator elevatorOne = buildingState.elevators[1];
+    _Elevator elevatorTwo = buildingState.elevators[2];
+    
+    if (elevatorZero.isServicing && elevatorOne.isServicing && elevatorTwo.isServicing){
+        return "";
+    }
+    
+    else{
+
+    
+    _Floor floor = buildingState.floors[0];
+    //int numPeople = buildingState.floors[0].numPeople;
+    for (int j = 0; j < floor.numPeople; ++j) {
+        _Person littleMan = floor.people[j];
+        floor0Satisfaction += littleMan.angerLevel;
+    }
+    cout << "the anger level of floor 0 is " << floor0Satisfaction  << endl;
+    
+    
+    _Floor floor1 = buildingState.floors[1];
+    //int numPeople1 = buildingState.floors[1].numPeople;
+    for (int j = 0; j < floor1.numPeople; ++j) {
+        _Person littleMan1 = floor1.people[j];
+        floor1Satisfaction += littleMan1.angerLevel;
+    }
+    cout << "the anger level of floor 1 is " << floor1Satisfaction  << endl;
+    
+    _Floor floor2 = buildingState.floors[2];
+    //int numPeople2 = buildingState.floors[2].numPeople;
+    for (int j = 0; j < floor2.numPeople; ++j) {
+        _Person littleMan2 = floor2.people[j];
+        floor2Satisfaction += littleMan2.angerLevel;
+    }
+    cout << "the anger level of floor 2 is " << floor2Satisfaction  << endl;
+    
+    _Floor floor3 = buildingState.floors[3];
+    //int numPeople3 = buildingState.floors[3].numPeople;
+    for (int j = 0; j < floor3.numPeople; ++j) {
+        _Person littleMan3 = floor3.people[j];
+        floor3Satisfaction += littleMan3.angerLevel;
+    }
+    cout << "the anger level of floor 3 is " << floor3Satisfaction  << endl;
+    
+    _Floor floor4 = buildingState.floors[4];
+    //int numPeople4 = buildingState.floors[4].numPeople;
+    for (int j = 0; j < floor4.numPeople; ++j) {
+        _Person littleMan4 = floor4.people[j];
+        floor4Satisfaction += littleMan4.angerLevel;
+    }
+    cout << "the anger level of floor 4 is " << floor4Satisfaction  << endl;
+    
+    _Floor floor5 = buildingState.floors[5];
+    //int numPeople5 = buildingState.floors[5].numPeople;
+    for (int j = 0; j < floor4.numPeople; ++j) {
+        _Person littleMan5 = floor5.people[j];
+        floor5Satisfaction += littleMan5.angerLevel;
+    }
+    cout << "the anger level of floor 5 is " << floor5Satisfaction  << endl;
+    
+    _Floor floor6 = buildingState.floors[6];
+    //int numPeople6 = buildingState.floors[6].numPeople;
+    for (int j = 0; j < floor6.numPeople; ++j) {
+        _Person littleMan6 = floor6.people[j];
+        floor6Satisfaction += littleMan6.angerLevel;
+    }
+    cout << "the anger level of floor 6 is " << floor6Satisfaction  << endl;
+    
+    _Floor floor7 = buildingState.floors[7];
+    //int numPeople7 = buildingState.floors[7].numPeople;
+    for (int j = 0; j < floor7.numPeople; ++j) {
+        _Person littleMan7 = floor7.people[j];
+        floor7Satisfaction += littleMan7.angerLevel;
+    }
+    cout << "the anger level of floor 7 is " << floor7Satisfaction  << endl;
+
+    _Floor floor8 = buildingState.floors[8];
+    //int numPeople8 = buildingState.floors[8].numPeople;
+    for (int j = 0; j < floor8.numPeople; ++j) {
+        _Person littleMan8 = floor8.people[j];
+        floor8Satisfaction += littleMan8.angerLevel;
+    }
+    cout << "the anger level of floor 8 is " << floor8Satisfaction  << endl;
+    
+    _Floor floor9 = buildingState.floors[9];
+    //int numPeople9 = buildingState.floors[9].numPeople;
+    for (int j = 0; j < floor9.numPeople; ++j) {
+        _Person littleMan9 = floor9.people[j];
+        floor9Satisfaction += littleMan9.angerLevel;
+    }
+    cout << "the anger level of floor 9 is " << floor9Satisfaction  << endl;
+    
+    int angerFloor[NUM_FLOORS] = {floor0Satisfaction, floor1Satisfaction, floor2Satisfaction, floor3Satisfaction, floor4Satisfaction, floor5Satisfaction, floor6Satisfaction, floor7Satisfaction, floor8Satisfaction, floor9Satisfaction};
+    int anger = 0;
+    int angriestFloor = 0;
+ 
+    for (int i = 0; i < NUM_FLOORS; i ++){
+        if (angerFloor[i] > anger){
+            anger = angerFloor[i];
+            angriestFloor = i;
         }
-        //find floor with highest anger level
-        if (totalFloorSatisfaction > highestAnger){
-            highestAnger = totalFloorSatisfaction;
-        }
+    }
+    cout << "The angriest floor is floor " << angriestFloor << " with anger " << anger << endl;
+        
         for (int i = 0; i < NUM_ELEVATORS; ++i) {
-            _Elevator elevator = building.elevators[i];
-            if (!elevator.isServicing) {
-                string moveString = "e" + to_string(i) + "f" + to_string(currFloor);
-            }
-            else{
-                string moveString = "e" + to_string(i) + "p";
+            _Elevator elevator = buildingState.elevators[i];
+            if (!elevator.isServicing &&
+                elevator.currentFloor != angriestFloor &&
+                //TARGET FLOOR ISSUE
+                angriestFloor != elevatorZero.targetFloor && angriestFloor != elevatorOne.targetFloor && angriestFloor != elevatorTwo.targetFloor) {
+                string myMove = "e" + to_string(i) + "f" + to_string(angriestFloor);
+                return myMove;
             }
         }
     }
-    return moveString;
+    return   "";
 }
+*/ 
 
 
 
