@@ -83,38 +83,54 @@ string getAIMoveString(const BuildingState& buildingState) {
     }
 }
 
+//this function will determine who to pick up based on which direction we can score the most points in 
+//We pick up everyone on going in the direction that will earn us more points
 string getAIPickupList(const Move& move, const BuildingState& buildingState, 
                        const Floor& floorToPickup) {
-    return "";
-}
-
-//returns "up" if elevator should go up
-//returns "down" if elevator should go down
-string goUpOrDown(Floor& floor) {
-    //we get number of people on the floor in question
-    int numPeopleOnFloor = floor.getNumPeople();
-    //by the end this should be a positive or negative value
-    int sum = 0;
-
-    for (int i = 0; i < numPeopleOnFloor; i++) {
-        //we get the person at each index
-        Person person = floor.getPersonByIndex(i);
-        //points will be positive if they are going up and negative if going down
-        int points = person.getTargetFloor() - person.getCurrentFloor();
-        //add it to sum
-        sum += points;
+    //number of people on the given floor
+    int numPeopleOnFloor = floorToPickup.getNumPeople();
+    //first we need to check if theres actually people to pick up
+    if (numPeopleOnFloor > 0) {
+        //we do this just to find the index of the floor we're working with
+        int floorIndex = floorToPickup.getPersonByIndex(0).getCurrentFloor();
+        int sum = 0;
+        //loop through people on floor
+        //add to sum the differernce between target floor and current floor
+        for (int i = 0; i < numPeopleOnFloor; i++) {
+            Person person = floorToPickup.getPersonByIndex(i);
+            int points = person.getTargetFloor() - person.getCurrentFloor();
+            sum += points;
+        }
+        //to be returned at end
+        string result = "";
+        if (sum >= 0) {
+            for (int i = 0; i < numPeopleOnFloor; i++) 
+                //unsure about format of return string
+                //also do i need to static cast i to string
+                if (floorToPickup.getPersonByIndex(i).getTargetFloor() > floorIndex) {
+                    result += i;
+                    result += " ";
+                }
+            }
+        else if (sum < 0) {
+            for (int i = 0; i < numPeopleOnFloor; i++) {
+                //unsure about format of return string
+                //also do i need to static cast i to string
+                if (floorToPickup.getPersonByIndex(i).getTargetFloor() < floorIndex) {
+                    result += i;
+                    result += " ";
+                }
+            }
+        }
+        return result;
     }
-    //if sum is greater than 0 there are more points to be earned by going up
-    //so we return an up command
-    if (sum >= 0) {
-        return "up";
-    }
-    //if sum is less than 0 there are more points to be earned by going down
-    //so we return a down command
     else {
-        return "down";
+        return "";
     }
+    
 }
+
+
 
 string decideBetweenTwo(const BuildingState& buildingState) {
     //first checking the servicing state of an elevator, storing elevators that aren't servicing in a temp array and storing their current floor
