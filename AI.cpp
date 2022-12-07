@@ -12,6 +12,7 @@
 
 #include "AI.h"
 #include <cassert>
+#include <string>
 
 
 
@@ -108,8 +109,7 @@ string getAIPickupList(const Move& move, const BuildingState& buildingState,
                 //unsure about format of return string
                 //also do i need to static cast i to string
                 if (floorToPickup.getPersonByIndex(i).getTargetFloor() > floorIndex) {
-                    result += i;
-                    result += " ";
+                    result += toString(i);
                 }
             }
         else if (sum < 0) {
@@ -117,8 +117,7 @@ string getAIPickupList(const Move& move, const BuildingState& buildingState,
                 //unsure about format of return string
                 //also do i need to static cast i to string
                 if (floorToPickup.getPersonByIndex(i).getTargetFloor() < floorIndex) {
-                    result += i;
-                    result += " ";
+                    result += toString(i);
                 }
             }
         }
