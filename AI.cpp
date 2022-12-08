@@ -234,8 +234,7 @@ string getAIPickupList(const Move& move, const BuildingState& buildingState,
     }
 
     string prioritizeTopBottom(Move& move) {
-        int notServicing = 0;
-        int floorAngerTop = 0;
+       int floorAngerTop = 0;
         int floorAngerBottom = 0;
         string userMove;
             for (int i = 0; i < buildingState.floors[9].numPeople; i++) {
@@ -244,19 +243,21 @@ string getAIPickupList(const Move& move, const BuildingState& buildingState,
             for (int i = 0; i < buildingState.floors[0].numPeople; i++) {
                 floorAngerBottom += buildingState.floors[0].people[i].angerLevel;
             }
-            if (floorAngerTop > floorAngerBottom) {
+
                 for (int i = 0; i < 3; i++) {
                     if (!buildingState.elevators[i].isServicing) {
+                        if (floorAngerTop > floorAngerBottom) {
                         userMove = "e" + to_string(i) + "f9";
-                    } else {
+                        }
+                        if (floorAnherBottom > floorAngerTop) {
                         userMove = "e" + to_string(i) + "f0";
+                        }
                     }
-                
                 }
+        return userMove;
             }
-    return "";
 
-    }
+  
 
 string decideBetweenTwo(const BuildingState& buildingState) {
     //first checking the servicing state of an elevator, storing elevators that aren't servicing in a temp array and storing their current floor
