@@ -233,7 +233,7 @@ string getAIPickupList(const Move& move, const BuildingState& buildingState,
         }
     }
 
-    string prioritizeTopBottom(Move& move) {
+    string prioritizeTopBottom(BuildingState& buildingState) {
        int floorAngerTop = 0;
         int floorAngerBottom = 0;
         string userMove;
