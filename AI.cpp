@@ -47,7 +47,7 @@ string makePickupMove(const BuildingState& buildingState) {
 
 
 bool isTherePickupMove(const BuildingState& buildingState) {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < NUM_ELEVATORS; i++) {
         if (buildingState.elevators[i].currentFloor == buildingState.elevators[i].targetFloor &&
             buildingState.elevators[i].isServicing == false &&
             (buildingState.floors[buildingState.elevators[i].currentFloor].numPeople >= 1)){
@@ -112,9 +112,9 @@ string getAIMoveString(const BuildingState& buildingState) {
     
     
     
-    if (isTherePickupMove(buildingState)){
+    /*if (isTherePickupMove(buildingState)){
         return makePickupMove(buildingState);
-    }
+    }*/
     
     // else, continue with game:
     /*else if (isFloorOneOrNine(buildingState)){
@@ -268,6 +268,13 @@ string getAIMoveString(const BuildingState& buildingState) {
                     string myMove = "e" + to_string(i) + "f" + to_string(angriestFloor);
                     return myMove;
                 }
+                else if((buildingState.elevators[i].currentFloor == buildingState.elevators[i].targetFloor &&
+                         buildingState.elevators[i].isServicing == false &&
+                         (buildingState.floors[buildingState.elevators[i].currentFloor].numPeople >= 1))) {
+                    myMove = "e" + to_string(i) + "p";
+                    return myMove;
+
+                }
             }
         }
         return   "";
@@ -319,4 +326,5 @@ string getAIPickupList(const Move& move, const BuildingState& buildingState,
         return "";
     }
 }
+
 
