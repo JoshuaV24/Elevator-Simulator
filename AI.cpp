@@ -251,14 +251,13 @@ string getAIMoveString(const BuildingState& buildingState) {
             int angriestFloor = 0;
 
             for (int i = 0; i < NUM_FLOORS; i++) {
-                int average = angerFloor[i] / buildingState.floors[i].numPeople;
-                
-                if (average > anger) {
-                    anger = average;
+                if (angerFloor[i] > anger) {
+                    anger = angerFloor[i];
                     angriestFloor = i;
                 }
             }
-            cout << "The angriest floor is floor " << angriestFloor << " with average anger " << average << endl;
+
+            cout << "The angriest floor is floor " << angriestFloor << " with anger " << anger << endl;
 
 
             for (int i = 0; i < NUM_ELEVATORS; ++i) {
