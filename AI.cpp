@@ -10,13 +10,6 @@
  * Final Project - Elevators
  */
 
-#include "AI.h"
-#include <cassert>
-#include <string>
-
-
-
-
 //Questions:
 //How do all the functions fit together
 //How do we access classes that aren't listed as parameters or are we only supposed to use what is listed as parameters for the two functions given?
