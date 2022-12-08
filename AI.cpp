@@ -312,3 +312,11 @@ string makePickupMove(const BuildingState& buildingState) {
         }
     }
 }
+    
+    bool isTherePickupMove(const BuildingState& buildingState) {
+    for (int i = 0; i < 3; i++) {
+        if (buildingState.elevators[i].currentFloor == buildingState.elevators[i].targetFloor
+            && buildingState.elevators[i].isServicing == false) {
+            return true;
+        }
+}
