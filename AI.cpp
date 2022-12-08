@@ -201,7 +201,7 @@ string getAIPickupList(const Move& move, const BuildingState& buildingState,
                 //unsure about format of return string
                 //also do i need to static cast i to string
                 if (floorToPickup.getPersonByIndex(i).getTargetFloor() > floorIndex) {
-                    result += toString(i);
+                    result += to_string(i);
                 }
             }
         else if (sum < 0) {
@@ -209,7 +209,7 @@ string getAIPickupList(const Move& move, const BuildingState& buildingState,
                 //unsure about format of return string
                 //also do i need to static cast i to string
                 if (floorToPickup.getPersonByIndex(i).getTargetFloor() < floorIndex) {
-                    result += toString(i);
+                    result += to_string(i);
                 }
             }
         }
@@ -299,4 +299,15 @@ string decideBetweenTwo(const BuildingState& buildingState) {
         }
     }
     return "";
+}
+    
+    
+string makePickupMove(const BuildingState& buildingState) {
+    for (int i = 0; i < 3; i++) {
+        if (buildingState.elevators[i].currentFloor == buildingState.elevators[i].targetFloor
+            && buildingState.elevators[i].isServicing == false) {
+            string result = "e" + to_string(buildingState.elevators[i].currentFloor) + "p";
+            return result;
+        }
+    }
 }
