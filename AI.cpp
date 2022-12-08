@@ -175,16 +175,6 @@ string getAIMoveString(const BuildingState& buildingState) {
 // You do not need to make any changes to this file for the Core
 
 string getAIMoveString(const BuildingState& buildingState) {
-        string passMove(Move& move);
-    int notServicing = 0;
-    for (int i = 0; i < 3; i++) {
-    if (!buildingState.elevators[i].isServicing) {
-        notServicing++;
-    }
-    if (notServicing == 3) {
-        return "";
-    }
-}
 
 //this function will determine who to pick up based on which direction we can score the most points in 
 //We pick up everyone on going in the direction that will earn us more points
@@ -231,7 +221,42 @@ string getAIPickupList(const Move& move, const BuildingState& buildingState,
     
 }
 
+    string passMove(Move& move) {
+        int notServicing = 0;
+        for (int i = 0; i < 3; i++) {
+            if (!buildingState.elevators[i].isServicing) {
+                notServicing++;
+            }
+        }
+        if (notServicing == 3) {
+            return "";
+        }
+    }
 
+    string prioritizeTopBottom(Move& move) {
+        int notServicing = 0;
+        int floorAngerTop = 0;
+        int floorAngerBottom = 0;
+        string userMove;
+            for (int i = 0; i < buildingState.floors[9].numPeople; i++) {
+                floorAngerTop += buildingState.floors[9].people[i].angerLevel;
+            }
+            for (int i = 0; i < buildingState.floors[0].numPeople; i++) {
+                floorAngerBottom += buildingState.floors[0].people[i].angerLevel;
+            }
+            if (floorAngerTop > floorAngerBottom) {
+                for (int i = 0; i < 3; i++) {
+                    if (!buildingState.elevators[i].isServicing) {
+                        userMove = "e" + to_string(i) + "f9";
+                    } else {
+                        userMove = "e" + to_string(i) + "f0";
+                    }
+                
+                }
+            }
+    return "";
+
+    }
 
 string decideBetweenTwo(const BuildingState& buildingState) {
     //first checking the servicing state of an elevator, storing elevators that aren't servicing in a temp array and storing their current floor
