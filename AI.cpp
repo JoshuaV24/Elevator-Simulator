@@ -10,12 +10,12 @@
  * Final Project - Elevators
  */
 
-//Questions:
-//How do all the functions fit together
-//How do we access classes that aren't listed as parameters or are we only supposed to use what is listed as parameters for the two functions given?
-//How can we use BuildingState to determine a move string?
-//Can we get an overview of how everything should fit together?
-//How can we access the elevators and floors in building state?
+ //Questions:
+ //How do all the functions fit together
+ //How do we access classes that aren't listed as parameters or are we only supposed to use what is listed as parameters for the two functions given?
+ //How can we use BuildingState to determine a move string?
+ //Can we get an overview of how everything should fit together?
+ //How can we access the elevators and floors in building state?
 
 
 
@@ -29,7 +29,7 @@
 
 string makePickupMove(const BuildingState& buildingState) {
     string result;
-    
+
     for (int i = 0; i < NUM_ELEVATORS; i++) {
         if (buildingState.elevators[i].currentFloor == buildingState.elevators[i].targetFloor &&
             buildingState.elevators[i].isServicing == false &&
@@ -43,14 +43,14 @@ string makePickupMove(const BuildingState& buildingState) {
     }
     return result;
 }
-    
+
 
 
 bool isTherePickupMove(const BuildingState& buildingState) {
     for (int i = 0; i < NUM_ELEVATORS; i++) {
         if (buildingState.elevators[i].currentFloor == buildingState.elevators[i].targetFloor &&
             buildingState.elevators[i].isServicing == false &&
-            (buildingState.floors[buildingState.elevators[i].currentFloor].numPeople >= 1)){
+            (buildingState.floors[buildingState.elevators[i].currentFloor].numPeople >= 1)) {
             int targetFloor = buildingState.elevators[i].targetFloor;
             int currFloor = buildingState.elevators[i].currentFloor;
             cout << "IPM: For elevator " << i << " CF: " << currFloor << " TF: " << targetFloor << " IS: " << buildingState.elevators[i].isServicing << endl;
@@ -62,13 +62,13 @@ bool isTherePickupMove(const BuildingState& buildingState) {
     return false;
 }
 
-string pickupTime(const BuildingState& buildingState){
+string pickupTime(const BuildingState& buildingState) {
     string result;
-    
+
     for (int i = 0; i < 3; i++) {
         if (buildingState.elevators[i].currentFloor == buildingState.elevators[i].targetFloor &&
             buildingState.elevators[i].isServicing == false &&
-            (buildingState.floors[buildingState.elevators[i].currentFloor].numPeople >= 1)){
+            (buildingState.floors[buildingState.elevators[i].currentFloor].numPeople >= 1)) {
             result = "e" + to_string(i) + "p";
             int targetFloor = buildingState.elevators[i].targetFloor;
             int currFloor = buildingState.elevators[i].currentFloor;
@@ -83,10 +83,10 @@ string pickupTime(const BuildingState& buildingState){
 }
 
 
-bool isFloorOneOrNine(const BuildingState& buildingState){
-    for (int i = 0; i < NUM_ELEVATORS; i++){
+bool isFloorOneOrNine(const BuildingState& buildingState) {
+    for (int i = 0; i < NUM_ELEVATORS; i++) {
         if (buildingState.elevators[i].currentFloor == 8 ||
-            buildingState.elevators[i].currentFloor == 1){
+            buildingState.elevators[i].currentFloor == 1) {
             cout << "F1or9" << endl;
             return true;
         }
@@ -97,25 +97,25 @@ bool isFloorOneOrNine(const BuildingState& buildingState){
 
 
 string getAIMoveString(const BuildingState& buildingState) {
- 
+
     //pickupTime(buildingState);
 
     // make pass move if all elevators are servicing
     if (buildingState.elevators[0].isServicing &&
-        buildingState.elevators[1].isServicing&&
-        buildingState.elevators[2].isServicing){
+        buildingState.elevators[1].isServicing &&
+        buildingState.elevators[2].isServicing) {
         cout << "making pass move" << endl;
         return "";
     }
-    
+
     //if target floor = current floor, make pickup
-    
-    
-    
+
+
+
     /*if (isTherePickupMove(buildingState)){
         return makePickupMove(buildingState);
     }*/
-    
+
     // else, continue with game:
     /*else if (isFloorOneOrNine(buildingState)){
         int floorAngerTop = 0;
@@ -127,7 +127,6 @@ string getAIMoveString(const BuildingState& buildingState) {
              for (int i = 0; i < buildingState.floors[0].numPeople; i++) {
                  floorAngerBottom += buildingState.floors[0].people[i].angerLevel;
              }
-
                  for (int i = 0; i < 3; i++) {
                      if (!buildingState.elevators[i].isServicing) {
                          if (floorAngerTop > floorAngerBottom) {
@@ -141,8 +140,8 @@ string getAIMoveString(const BuildingState& buildingState) {
         cout << "moving to f1or9" << endl;
          return userMove;
     }*/
-    
-    else{
+
+    else {
         int floor0Satisfaction = 0;
         int floor1Satisfaction = 0;
         int floor2Satisfaction = 0;
@@ -154,139 +153,138 @@ string getAIMoveString(const BuildingState& buildingState) {
         int floor8Satisfaction = 0;
         int floor9Satisfaction = 0;
         string myMove = "";
-        
+
         _Elevator elevatorZero = buildingState.elevators[0];
         _Elevator elevatorOne = buildingState.elevators[1];
         _Elevator elevatorTwo = buildingState.elevators[2];
-        
-        if (elevatorZero.isServicing && elevatorOne.isServicing && elevatorTwo.isServicing){
+
+        if (elevatorZero.isServicing && elevatorOne.isServicing && elevatorTwo.isServicing) {
             return "";
         }
-        
-        else{
 
-        
-        _Floor floor = buildingState.floors[0];
-        //int numPeople = buildingState.floors[0].numPeople;
-        for (int j = 0; j < floor.numPeople; ++j) {
-            _Person littleMan = floor.people[j];
-            floor0Satisfaction += littleMan.angerLevel;
-        }
-        cout << "the anger level of floor 0 is " << floor0Satisfaction  << endl;
-        
-        
-        _Floor floor1 = buildingState.floors[1];
-        //int numPeople1 = buildingState.floors[1].numPeople;
-        for (int j = 0; j < floor1.numPeople; ++j) {
-            _Person littleMan1 = floor1.people[j];
-            floor1Satisfaction += littleMan1.angerLevel;
-        }
-        cout << "the anger level of floor 1 is " << floor1Satisfaction  << endl;
-        
-        _Floor floor2 = buildingState.floors[2];
-        //int numPeople2 = buildingState.floors[2].numPeople;
-        for (int j = 0; j < floor2.numPeople; ++j) {
-            _Person littleMan2 = floor2.people[j];
-            floor2Satisfaction += littleMan2.angerLevel;
-        }
-        cout << "the anger level of floor 2 is " << floor2Satisfaction  << endl;
-        
-        _Floor floor3 = buildingState.floors[3];
-        //int numPeople3 = buildingState.floors[3].numPeople;
-        for (int j = 0; j < floor3.numPeople; ++j) {
-            _Person littleMan3 = floor3.people[j];
-            floor3Satisfaction += littleMan3.angerLevel;
-        }
-        cout << "the anger level of floor 3 is " << floor3Satisfaction  << endl;
-        
-        _Floor floor4 = buildingState.floors[4];
-        //int numPeople4 = buildingState.floors[4].numPeople;
-        for (int j = 0; j < floor4.numPeople; ++j) {
-            _Person littleMan4 = floor4.people[j];
-            floor4Satisfaction += littleMan4.angerLevel;
-        }
-        cout << "the anger level of floor 4 is " << floor4Satisfaction  << endl;
-        
-        _Floor floor5 = buildingState.floors[5];
-        //int numPeople5 = buildingState.floors[5].numPeople;
-        for (int j = 0; j < floor4.numPeople; ++j) {
-            _Person littleMan5 = floor5.people[j];
-            floor5Satisfaction += littleMan5.angerLevel;
-        }
-        cout << "the anger level of floor 5 is " << floor5Satisfaction  << endl;
-        
-        _Floor floor6 = buildingState.floors[6];
-        //int numPeople6 = buildingState.floors[6].numPeople;
-        for (int j = 0; j < floor6.numPeople; ++j) {
-            _Person littleMan6 = floor6.people[j];
-            floor6Satisfaction += littleMan6.angerLevel;
-        }
-        cout << "the anger level of floor 6 is " << floor6Satisfaction  << endl;
-        
-        _Floor floor7 = buildingState.floors[7];
-        //int numPeople7 = buildingState.floors[7].numPeople;
-        for (int j = 0; j < floor7.numPeople; ++j) {
-            _Person littleMan7 = floor7.people[j];
-            floor7Satisfaction += littleMan7.angerLevel;
-        }
-        cout << "the anger level of floor 7 is " << floor7Satisfaction  << endl;
+        else {
 
-        _Floor floor8 = buildingState.floors[8];
-        //int numPeople8 = buildingState.floors[8].numPeople;
-        for (int j = 0; j < floor8.numPeople; ++j) {
-            _Person littleMan8 = floor8.people[j];
-            floor8Satisfaction += littleMan8.angerLevel;
-        }
-        cout << "the anger level of floor 8 is " << floor8Satisfaction  << endl;
-        
-        _Floor floor9 = buildingState.floors[9];
-        //int numPeople9 = buildingState.floors[9].numPeople;
-        for (int j = 0; j < floor9.numPeople; ++j) {
-            _Person littleMan9 = floor9.people[j];
-            floor9Satisfaction += littleMan9.angerLevel;
-        }
-        cout << "the anger level of floor 9 is " << floor9Satisfaction  << endl;
-        
-        int angerFloor[NUM_FLOORS] = {floor0Satisfaction, floor1Satisfaction, floor2Satisfaction, floor3Satisfaction, floor4Satisfaction, floor5Satisfaction, floor6Satisfaction, floor7Satisfaction, floor8Satisfaction, floor9Satisfaction};
-        int anger = 0;
-        int angriestFloor = 0;
-     
-        for (int i = 0; i < NUM_FLOORS; i ++){
-            if (angerFloor[i] > anger){
-                anger = angerFloor[i];
-                angriestFloor = i;
+
+            _Floor floor = buildingState.floors[0];
+            //int numPeople = buildingState.floors[0].numPeople;
+            for (int j = 0; j < floor.numPeople; ++j) {
+                _Person littleMan = floor.people[j];
+                floor0Satisfaction += littleMan.angerLevel;
             }
-        }
-        cout << "The angriest floor is floor " << angriestFloor << " with anger " << anger << endl;
-            
+            cout << "the anger level of floor 0 is " << floor0Satisfaction << endl;
+
+
+            _Floor floor1 = buildingState.floors[1];
+            //int numPeople1 = buildingState.floors[1].numPeople;
+            for (int j = 0; j < floor1.numPeople; ++j) {
+                _Person littleMan1 = floor1.people[j];
+                floor1Satisfaction += littleMan1.angerLevel;
+            }
+            cout << "the anger level of floor 1 is " << floor1Satisfaction << endl;
+
+            _Floor floor2 = buildingState.floors[2];
+            //int numPeople2 = buildingState.floors[2].numPeople;
+            for (int j = 0; j < floor2.numPeople; ++j) {
+                _Person littleMan2 = floor2.people[j];
+                floor2Satisfaction += littleMan2.angerLevel;
+            }
+            cout << "the anger level of floor 2 is " << floor2Satisfaction << endl;
+
+            _Floor floor3 = buildingState.floors[3];
+            //int numPeople3 = buildingState.floors[3].numPeople;
+            for (int j = 0; j < floor3.numPeople; ++j) {
+                _Person littleMan3 = floor3.people[j];
+                floor3Satisfaction += littleMan3.angerLevel;
+            }
+            cout << "the anger level of floor 3 is " << floor3Satisfaction << endl;
+
+            _Floor floor4 = buildingState.floors[4];
+            //int numPeople4 = buildingState.floors[4].numPeople;
+            for (int j = 0; j < floor4.numPeople; ++j) {
+                _Person littleMan4 = floor4.people[j];
+                floor4Satisfaction += littleMan4.angerLevel;
+            }
+            cout << "the anger level of floor 4 is " << floor4Satisfaction << endl;
+
+            _Floor floor5 = buildingState.floors[5];
+            //int numPeople5 = buildingState.floors[5].numPeople;
+            for (int j = 0; j < floor4.numPeople; ++j) {
+                _Person littleMan5 = floor5.people[j];
+                floor5Satisfaction += littleMan5.angerLevel;
+            }
+            cout << "the anger level of floor 5 is " << floor5Satisfaction << endl;
+
+            _Floor floor6 = buildingState.floors[6];
+            //int numPeople6 = buildingState.floors[6].numPeople;
+            for (int j = 0; j < floor6.numPeople; ++j) {
+                _Person littleMan6 = floor6.people[j];
+                floor6Satisfaction += littleMan6.angerLevel;
+            }
+            cout << "the anger level of floor 6 is " << floor6Satisfaction << endl;
+
+            _Floor floor7 = buildingState.floors[7];
+            //int numPeople7 = buildingState.floors[7].numPeople;
+            for (int j = 0; j < floor7.numPeople; ++j) {
+                _Person littleMan7 = floor7.people[j];
+                floor7Satisfaction += littleMan7.angerLevel;
+            }
+            cout << "the anger level of floor 7 is " << floor7Satisfaction << endl;
+
+            _Floor floor8 = buildingState.floors[8];
+            //int numPeople8 = buildingState.floors[8].numPeople;
+            for (int j = 0; j < floor8.numPeople; ++j) {
+                _Person littleMan8 = floor8.people[j];
+                floor8Satisfaction += littleMan8.angerLevel;
+            }
+            cout << "the anger level of floor 8 is " << floor8Satisfaction << endl;
+
+            _Floor floor9 = buildingState.floors[9];
+            //int numPeople9 = buildingState.floors[9].numPeople;
+            for (int j = 0; j < floor9.numPeople; ++j) {
+                _Person littleMan9 = floor9.people[j];
+                floor9Satisfaction += littleMan9.angerLevel;
+            }
+            cout << "the anger level of floor 9 is " << floor9Satisfaction << endl;
+
+            int angerFloor[NUM_FLOORS] = { floor0Satisfaction, floor1Satisfaction, floor2Satisfaction, floor3Satisfaction, floor4Satisfaction, floor5Satisfaction, floor6Satisfaction, floor7Satisfaction, floor8Satisfaction, floor9Satisfaction };
+            int anger = 0;
+            int angriestFloor = 0;
+
+            for (int i = 0; i < NUM_FLOORS; i++) {
+                if (angerFloor[i] > anger) {
+                    anger = angerFloor[i];
+                    angriestFloor = i;
+                }
+            }
+            cout << "The angriest floor is floor " << angriestFloor << " with anger " << anger << endl;
+
+
             for (int i = 0; i < NUM_ELEVATORS; ++i) {
                 _Elevator elevator = buildingState.elevators[i];
                 if (!elevator.isServicing &&
                     elevator.currentFloor != angriestFloor &&
                     //TARGET FLOOR ISSUE
                     angriestFloor != elevatorZero.targetFloor && angriestFloor != elevatorOne.targetFloor && angriestFloor != elevatorTwo.targetFloor) {
-                    string myMove = "e" + to_string(i) + "f" + to_string(angriestFloor);
-                    return myMove;
+                    if (abs(buildingState.elevators[i].currentFloor - angriestFloor) <=
+                        (abs(buildingState.elevators[i + 1].currentFloor - angriestFloor))) {
+                        string myMove = "e" + to_string(i) + "f" + to_string(angriestFloor);
+                        return myMove;
+                    }
                 }
-                else if((buildingState.elevators[i].currentFloor == buildingState.elevators[i].targetFloor &&
-                         buildingState.elevators[i].isServicing == false &&
-                         (buildingState.floors[buildingState.elevators[i].currentFloor].numPeople >= 1))) {
+                else if ((buildingState.elevators[i].currentFloor == buildingState.elevators[i].targetFloor &&
+                    buildingState.elevators[i].isServicing == false &&
+                    (buildingState.floors[buildingState.elevators[i].currentFloor].numPeople >= 1))) {
                     myMove = "e" + to_string(i) + "p";
                     return myMove;
-
                 }
             }
         }
         return   "";
     }
-    
-    
 }
 
-
-
-string getAIPickupList(const Move& move, const BuildingState& buildingState, 
-                       const Floor& floorToPickup) {
+string getAIPickupList(const Move& move, const BuildingState& buildingState,
+    const Floor& floorToPickup) {
     //number of people on the given floor
     int numPeopleOnFloor = floorToPickup.getNumPeople();
     //first we need to check if theres actually people to pick up
@@ -310,7 +308,7 @@ string getAIPickupList(const Move& move, const BuildingState& buildingState,
                 if (floorToPickup.getPersonByIndex(i).getTargetFloor() > floorIndex) {
                     result += to_string(i);
                 }
-            }
+        }
         else if (sum < 0) {
             for (int i = 0; i < numPeopleOnFloor; i++) {
                 //unsure about format of return string
@@ -326,5 +324,3 @@ string getAIPickupList(const Move& move, const BuildingState& buildingState,
         return "";
     }
 }
-
-
